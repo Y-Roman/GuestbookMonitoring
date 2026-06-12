@@ -58,6 +58,16 @@ const redisMasterService = new k8s.core.v1.Service("redis-master-svc", {
     },
 }, { dependsOn: redisMasterDeployment });
 
+// The frontend v5 image looks for "redis-follower" for reads.
+// We point it at the same Redis master since this is a single-node dev setup.
+const redisFollowerService = new k8s.core.v1.Service("redis-follower-svc", {
+    metadata: { name: "redis-follower", namespace: "guestbook" },
+    spec: {
+        selector: redisLabels,
+        ports: [{ port: 6379, targetPort: 6379 }],
+    },
+}, { dependsOn: redisMasterDeployment });
+
 // ============================================================
 // GUESTBOOK FRONTEND
 // A simple PHP app that lets users post messages.

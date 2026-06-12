@@ -85,6 +85,8 @@ Two dashboards load automatically after deploy:
 
 Navigate to: Grafana → Dashboards → Browse → *Guestbook Application Metrics*
 
+Or open directly: **http://localhost:30300/d/guestbook-app-metrics/guestbook-application-metrics**
+
 ---
 
 ## How to Verify Prometheus Is Scraping Guestbook Metrics
@@ -99,10 +101,10 @@ Open **http://localhost:9090/graph** and run either query:
 
 ```promql
 # Memory usage per guestbook pod
-container_memory_usage_bytes{namespace="guestbook"}
+container_memory_usage_bytes{namespace="guestbook", pod!=""}
 
 # CPU rate per guestbook pod (5-minute average)
-sum(rate(container_cpu_usage_seconds_total{namespace="guestbook", container!=""}[5m])) by (pod)
+sum(rate(container_cpu_usage_seconds_total{namespace="guestbook", pod!=""}[5m])) by (pod)
 ```
 
 Results confirm Prometheus holds live data for the guestbook pods.

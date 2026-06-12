@@ -178,7 +178,7 @@ const guestbookDashboard = {
             gridPos: { x: 12, y: 0, w: 6, h: 4 },
             datasource: { type: "prometheus", uid: "${datasource}" },
             targets: [{
-                expr: 'sum(rate(container_cpu_usage_seconds_total{namespace="guestbook",container!="",container!="POD"}[5m]))',
+                expr: 'sum(rate(container_cpu_usage_seconds_total{namespace="guestbook",pod!=""}[5m]))',
                 legendFormat: "CPU",
             }],
             options: { colorMode: "value", graphMode: "none", justifyMode: "center" },
@@ -189,7 +189,7 @@ const guestbookDashboard = {
             gridPos: { x: 18, y: 0, w: 6, h: 4 },
             datasource: { type: "prometheus", uid: "${datasource}" },
             targets: [{
-                expr: 'sum(container_memory_usage_bytes{namespace="guestbook",container!="",container!="POD"})',
+                expr: 'sum(container_memory_usage_bytes{namespace="guestbook",pod!=""})',
                 legendFormat: "Memory",
             }],
             options: { colorMode: "value", graphMode: "none", justifyMode: "center" },
@@ -200,7 +200,7 @@ const guestbookDashboard = {
             gridPos: { x: 0, y: 4, w: 12, h: 8 },
             datasource: { type: "prometheus", uid: "${datasource}" },
             targets: [{
-                expr: 'sum(rate(container_cpu_usage_seconds_total{namespace="guestbook",container!="",container!="POD"}[5m])) by (pod)',
+                expr: 'sum(rate(container_cpu_usage_seconds_total{namespace="guestbook",pod!=""}[5m])) by (pod)',
                 legendFormat: "{{pod}}",
             }],
             fieldConfig: { defaults: { unit: "short", custom: { lineWidth: 2 } } },
@@ -210,7 +210,7 @@ const guestbookDashboard = {
             gridPos: { x: 12, y: 4, w: 12, h: 8 },
             datasource: { type: "prometheus", uid: "${datasource}" },
             targets: [{
-                expr: 'sum(container_memory_usage_bytes{namespace="guestbook",container!="",container!="POD"}) by (pod)',
+                expr: 'sum(container_memory_usage_bytes{namespace="guestbook",pod!=""}) by (pod)',
                 legendFormat: "{{pod}}",
             }],
             fieldConfig: { defaults: { unit: "bytes", custom: { lineWidth: 2 } } },
